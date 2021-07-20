@@ -1,0 +1,6 @@
+framework module Pods_StudyBeatsFreeTests {
+  umbrella header "Pods-StudyBeatsFreeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

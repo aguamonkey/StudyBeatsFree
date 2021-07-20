@@ -1,0 +1,6 @@
+framework module Pods_StudyBeatsFree_StudyBeatsFreeUITests {
+  umbrella header "Pods-StudyBeatsFree-StudyBeatsFreeUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
