@@ -24,6 +24,12 @@ class Recorder: ObservableObject {
 
     var playing = false
     @Published var playValue: TimeInterval = 0.0
+    @Published var reverbValue: Float = 0.0
+    var reverbMaxValue: Float = 100.0
+    
+    @Published var delayValue: Double = 0.0
+    var delayMaxValue: Double = 1.0
+    
     
     var songDuration: TimeInterval = 0.0
 
@@ -45,6 +51,9 @@ class Recorder: ObservableObject {
   private var mixerNode: AVAudioMixerNode!
     
     //Added recently:
+    private var setReverb: AVAudioUnitReverb!
+    private var setDelay: AVAudioUnitDelay!
+    
     private var playerNode: AVAudioPlayerNode!
     private var playerBuffer: AVAudioPCMBuffer! = nil
  //   var playerNodeTwo: AVAudioPlayerNode!
@@ -92,6 +101,9 @@ class Recorder: ObservableObject {
       engine = AVAudioEngine()
       mixerNode = AVAudioMixerNode()
         playerNode = AVAudioPlayerNode()
+        setReverb = AVAudioUnitReverb()
+        setDelay = AVAudioUnitDelay()
+        
         
       //You may be able to set this to 0 with the condition that headphones are not plugged in. If headphones are not plugged in 0 for no feedback, if they are then level 5 is a good level.
       // Set volume to 0 to avoid audio feedback while recording.
@@ -100,6 +112,8 @@ class Recorder: ObservableObject {
 
       engine.attach(mixerNode)
         engine.attach(playerNode)
+        engine.attach(setReverb)
+        engine.attach(setDelay)
 
       makeConnections()
       
@@ -118,13 +132,33 @@ class Recorder: ObservableObject {
 
       let mainMixerNode = engine.mainMixerNode
       let mixerFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: inputFormat.sampleRate, channels: 1, interleaved: false)
-        engine.connect(inputNode, to: mixerNode, format: mixerFormat)
+        engine.connect(inputNode, to: setReverb, format: mixerFormat)
+        engine.connect(setReverb, to: setDelay, format: mixerFormat)
+        engine.connect(setDelay, to: mixerNode, format: mixerFormat)
         
 
         engine.connect(playerNode, to: mixerNode, format: mixerFormat)
-      engine.connect(mixerNode, to: mainMixerNode, format: mixerFormat)
+        engine.connect(mixerNode, to: mainMixerNode, format: mixerFormat)
+        
+        
+        setDelay.delayTime = 0
+        setDelay.feedback = 50
+        setDelay.lowPassCutoff = 15000
+        setDelay.wetDryMix = 100
+        
+        setReverb.wetDryMix = 0
+        setReverb.loadFactoryPreset(.mediumChamber)
+        
+        
     }
     
+    func changeReverbValue() {
+        setReverb.wetDryMix = reverbValue
+    }
+    
+    func changeDelayValue() {
+        setDelay.delayTime = delayValue
+    }
 
 
 

@@ -140,6 +140,7 @@ struct country1: View {
                 .frame(height: 500)
             
             HStack {
+                Spacer()
                    Button(action: {
                     self.recordingsettings.stopRecording()
                     self.recordingsettings.stopPlayback()
@@ -347,12 +348,16 @@ struct country1: View {
              }
                 Spacer()
                          
-                          Text(timeString(time: recordingsettings.playValue))
-                   .font(Font.custom("Lobster 1.4", size: 18))
-                                  .foregroundColor(Color.white)
-               }
+            }
+         HStack {
+         Spacer()
+             Text(self.recordingsettings.timeString(time: recordingsettings.playValue))
+            .font(Font.custom("Lobster 1.4", size: 18))
+             .foregroundColor(Color.white)
+         Spacer()
+         }
         //    if self.audiosettings.audioPlayer != nil {
-            
+            Group {
                Slider(value: $recordingsettings.playValue, in: TimeInterval(0.0)...recordingsettings.songDuration, onEditingChanged: { _ in
                 
                
@@ -455,19 +460,49 @@ struct country1: View {
                     
                }
             
-    //    }
-        }
-    }
-    func ShareAudio(_ AudioName : String ) -> URL?{
-        guard let hasAudio = Bundle.main.path(forResource: AudioName, ofType: "mp3") else {
-            print("no url found with name \(AudioName)")
-            return nil
-        }
-        let AudioUrl = URL.init(fileURLWithPath: hasAudio)
-        return AudioUrl
-    }
-    
-}
+                HStack {
+                 Spacer()
+                     Text("Vocal Reverb")
+                    .font(Font.custom("Lobster 1.4", size: 20))
+                     .foregroundColor(Color.white)
+                 Spacer()
+                 }
+                 Slider(value: $recordingsettings.reverbValue, in: Float(0.0)...recordingsettings.reverbMaxValue, onEditingChanged: { _ in
+                     
+                     self.recordingsettings.changeReverbValue()
+
+             }).accentColor(Color.white)
+                 
+                 
+             
+               //  Knob(value: $recordingsettings.reverbValue, bounds: 0...CGFloat(recordingsettings.reverbMaxValue))
+                     
+
+                 HStack {
+                 Spacer()
+                     Text("Vocal Delay")
+                    .font(Font.custom("Lobster 1.4", size: 20))
+                     .foregroundColor(Color.white)
+                 Spacer()
+                 }
+                 
+             Slider(value: $recordingsettings.delayValue, in: Double(0.0)...recordingsettings.delayMaxValue, onEditingChanged: { _ in
+                 
+                 self.recordingsettings.changeDelayValue()
+
+             }).accentColor(Color.white)
+             }
+     //    }
+         }
+     }
+     func ShareAudio(_ AudioName : String ) -> URL?{
+         let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+         
+         let fileName = docDir.appendingPathComponent(AudioName)
+         
+         return fileName
+     }
+ }
 
 struct StudyBeatsProCountry: View {
     
