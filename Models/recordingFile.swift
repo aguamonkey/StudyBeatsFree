@@ -14,13 +14,11 @@ class Recorder: ObservableObject {
   enum RecordingState {
     case recording, paused, stopped
   }
-    
-    
-    
     //PlayerSettings:
     var audioPlayer: AVAudioPlayer?
     var audioPlayerTwo: AVAudioPlayer?
     var audioPlayerThree: AVAudioPlayer?
+    var ioBufferDuration: TimeInterval!
 
     var playing = false
     @Published var playValue: TimeInterval = 0.0
@@ -29,19 +27,10 @@ class Recorder: ObservableObject {
     
     @Published var delayValue: Double = 0.0
     var delayMaxValue: Double = 1.0
-    
-    
     var songDuration: TimeInterval = 0.0
-
-
-    
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
     var formatter = DateComponentsFormatter()
-    
-    
     var isPlaying = false
-  
     var isRecording = false
 
     
@@ -69,6 +58,20 @@ class Recorder: ObservableObject {
     private var playbackButton: Image? = Image(systemName: "waveform.circle")
     private var tickButton: Image? = Image(systemName: "checkmark.circle")
     
+    var bluetoothDeviceConnected: Bool {
+        !AVAudioSession.sharedInstance().currentRoute.outputs.compactMap {
+            ($0.portType == .bluetoothA2DP ||
+            $0.portType == .bluetoothHFP ||
+            $0.portType == .bluetoothLE) ? true : nil
+        }.isEmpty
+    }
+
+    var headphoneDeviceConnected: Bool {
+        !AVAudioSession.sharedInstance().currentRoute.outputs.compactMap({
+            ($0.portType == .headphones) ? true : nil
+        }).isEmpty
+    }
+    
   private var state: RecordingState = .stopped
     fileprivate var isInterrupted = false
     fileprivate var configChangePending = false
@@ -83,7 +86,15 @@ class Recorder: ObservableObject {
 
     fileprivate func setupSession() {
       let session = AVAudioSession.sharedInstance()
-        let ioBufferDuration: TimeInterval = 0.14929
+        if bluetoothDeviceConnected == true {
+        ioBufferDuration = 0.005
+        }
+        if headphoneDeviceConnected {
+            ioBufferDuration = 0.05
+        }
+        else {
+            ioBufferDuration = 0.005
+        }
         let sampleRate: Double = 44100.0
 
         try? session.setCategory(.playAndRecord, options: [.defaultToSpeaker, .allowAirPlay, .allowBluetoothA2DP])
@@ -125,13 +136,23 @@ class Recorder: ObservableObject {
     fileprivate func makeConnections() {
         //You want to connect the player node to here but you may need to align it to a buffer in another function.
         
-      let inputNode = engine.inputNode
-     //   inputNode.volume = 0.0
-      let inputFormat = inputNode.outputFormat(forBus: 0)
+        let inputNode = engine.inputNode
+        if bluetoothDeviceConnected == true {
+          //  mixer.volume = 1.0
+            inputNode.volume = 1.5
+        }
+        if headphoneDeviceConnected == true {
+           // mixer.volume = 1.0
+            inputNode.volume = 2.5
+        }
+        
+        let inputFormat = inputNode.outputFormat(forBus: 0)
    //   engine.connect(inputNode, to: mixerNode, format: inputFormat)
 
       let mainMixerNode = engine.mainMixerNode
-      let mixerFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: inputFormat.sampleRate, channels: 1, interleaved: false)
+        guard let mixerFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: inputFormat.sampleRate, channels: 1, interleaved: false) else {
+            return
+        }
         engine.connect(inputNode, to: setReverb, format: mixerFormat)
         engine.connect(setReverb, to: setDelay, format: mixerFormat)
         engine.connect(setDelay, to: mixerNode, format: mixerFormat)
@@ -146,10 +167,8 @@ class Recorder: ObservableObject {
         setDelay.lowPassCutoff = 15000
         setDelay.wetDryMix = 100
         
-        setReverb.wetDryMix = 0
-        setReverb.loadFactoryPreset(.mediumChamber)
-        
-        
+        setReverb.wetDryMix = 0.4
+        setReverb.loadFactoryPreset(.largeChamber)
     }
     
     func changeReverbValue() {
@@ -165,9 +184,7 @@ class Recorder: ObservableObject {
     func setUpAudio(sound: String) {
         
         let url = Bundle.main.resourceURL!.appendingPathComponent(sound)
-        
-     
-        
+    
         audioFile = try! AVAudioFile(forReading: url)
         
         playerBuffer = AVAudioPCMBuffer(
@@ -178,7 +195,9 @@ class Recorder: ObservableObject {
         engine.attach(playerNode)
         engine.connect(playerNode, to: mixerNode, format: audioFile.processingFormat)
         
-        try! engine.start()
+        if engine.isRunning == false { try? engine.start() } else {
+            return
+        }
         
         
         playerNode.play()
@@ -212,7 +231,17 @@ class Recorder: ObservableObject {
    //     if isHeadsetPluggedIn() {
         //    self .setUpHipHopAudio(sound: "Hip Hop 8.caf")
         
-
+        let settings: [String: Any] = [
+            /// Format Flac
+            AVFormatIDKey: Int(kAudioFormatFLAC),
+            AVSampleRateKey: 44100,
+            AVNumberOfChannelsKey: 1,
+            AVLinearPCMBitDepthKey: 16,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue,
+            AVLinearPCMIsBigEndianKey: false,
+            AVLinearPCMIsFloatKey: true,
+            AVEncoderBitRateKey: 320000,
+            ]
         
         let tapNode: AVAudioNode = mixerNode
         
@@ -223,7 +252,7 @@ class Recorder: ObservableObject {
       
       // AVAudioFile uses the Core Audio Format (CAF) to write to disk.
       // So we're using the caf file extension.
-      let file = try AVAudioFile(forWriting: documentURL.appendingPathComponent(sound), settings: format.settings)
+      let file = try AVAudioFile(forWriting: documentURL.appendingPathComponent(sound), settings: settings)
         
 //Maybe the key lies in the format below:
       tapNode.installTap(onBus: 0, bufferSize: 32, format: format, block: {

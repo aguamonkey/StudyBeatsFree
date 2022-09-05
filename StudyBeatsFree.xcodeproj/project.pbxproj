@@ -759,6 +759,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyBeatsFree/Preview Content\"";
 				DEVELOPMENT_TEAM = J2452P8KTA;
 				ENABLE_PREVIEWS = YES;
@@ -768,7 +769,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 14.41;
+				MARKETING_VERSION = 15.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -842,6 +843,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyBeatsFree/Preview Content\"";
 				DEVELOPMENT_TEAM = J2452P8KTA;
 				ENABLE_PREVIEWS = YES;
@@ -851,7 +853,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 14.41;
+				MARKETING_VERSION = 15.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
