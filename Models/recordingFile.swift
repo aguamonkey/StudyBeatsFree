@@ -21,14 +21,18 @@ class Recorder: ObservableObject {
     var ioBufferDuration: TimeInterval!
 
     var playing = false
+    //Slider Controls:
     @Published var playValue: TimeInterval = 0.0
     @Published var reverbValue: Float = 0.0
-    var reverbMaxValue: Float = 100.0
-    
+    var reverbMaxValue: Float = 75.0
     @Published var delayValue: Double = 0.0
+    var vocalMaxVolume: Float = 3.5
+    @Published var vocalValue: Float = 0.0
     var delayMaxValue: Double = 1.0
     var songDuration: TimeInterval = 0.0
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    
     var formatter = DateComponentsFormatter()
     var isPlaying = false
     var isRecording = false
@@ -42,6 +46,7 @@ class Recorder: ObservableObject {
     //Added recently:
     private var setReverb: AVAudioUnitReverb!
     private var setDelay: AVAudioUnitDelay!
+    private var input: AVAudioInputNode!
     
     private var playerNode: AVAudioPlayerNode!
     private var playerBuffer: AVAudioPCMBuffer! = nil
@@ -136,24 +141,28 @@ class Recorder: ObservableObject {
     fileprivate func makeConnections() {
         //You want to connect the player node to here but you may need to align it to a buffer in another function.
         
-        let inputNode = engine.inputNode
+        input = engine.inputNode
         if bluetoothDeviceConnected == true {
           //  mixer.volume = 1.0
-            inputNode.volume = 1.5
+            vocalValue = 1.5
+            input.volume = vocalValue
         }
         if headphoneDeviceConnected == true {
            // mixer.volume = 1.0
-            inputNode.volume = 2.5
+            vocalValue = 2.5
+            input.volume = vocalValue
         }
         
-        let inputFormat = inputNode.outputFormat(forBus: 0)
+        let inputFormat = input.outputFormat(forBus: 0)
    //   engine.connect(inputNode, to: mixerNode, format: inputFormat)
 
       let mainMixerNode = engine.mainMixerNode
         guard let mixerFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: inputFormat.sampleRate, channels: 1, interleaved: false) else {
             return
         }
-        engine.connect(inputNode, to: setReverb, format: mixerFormat)
+        
+        
+        engine.connect(input, to: setReverb, format: mixerFormat)
         engine.connect(setReverb, to: setDelay, format: mixerFormat)
         engine.connect(setDelay, to: mixerNode, format: mixerFormat)
         
@@ -162,9 +171,11 @@ class Recorder: ObservableObject {
         engine.connect(mixerNode, to: mainMixerNode, format: mixerFormat)
         
         
+        
         setDelay.delayTime = 0
         setDelay.feedback = 50
         setDelay.lowPassCutoff = 15000
+        
         setDelay.wetDryMix = 100
         
         setReverb.wetDryMix = 0.4
@@ -177,6 +188,14 @@ class Recorder: ObservableObject {
     
     func changeDelayValue() {
         setDelay.delayTime = delayValue
+    }
+    
+    func changeTrackVolume() {
+        
+    }
+    
+    func changeVocalVolume() {
+        input.volume = vocalValue
     }
 
 
@@ -310,7 +329,6 @@ class Recorder: ObservableObject {
 
     }
     
-
     
     fileprivate func registerForNotifications() {
       NotificationCenter.default.addObserver(
@@ -474,11 +492,8 @@ class Recorder: ObservableObject {
             audioPlayerTwo?.play()
             isPlaying = true
         }
-        
-
     }
-    
-    
+
     func stopSound() {
         //   if playing == true {
         audioPlayer?.stop()
@@ -489,18 +504,13 @@ class Recorder: ObservableObject {
         
         //   }
     }
-    
-    
 
     func pauseSound() {
         if playing == true {
             audioPlayer?.pause()
             playing = false
-            
-            
         }
     }
-    
     
     func changeSliderValue() {
         if playing == true {
@@ -511,36 +521,23 @@ class Recorder: ObservableObject {
         
         if playing == false {
             audioPlayer?.currentTime = playValue
-            
-            
             audioPlayer?.play()
             playing = true
         }
-        
-
-    
 }
     
     func changeSliderValueTwo() {
-
-        
- 
         if isPlaying == true {
             pausePlaybackSound()
             audioPlayerTwo?.currentTime = playValue
         }
-        
         if isPlaying == false {
             audioPlayerTwo?.currentTime = playValue
             audioPlayerTwo?.play()
             isPlaying = true
         }
-    
 }
-    
 
-    
-    
 func timeString(time:TimeInterval) -> String {
     let minutes = Int(time) / 60
     let seconds = time - Double(minutes) * 60
