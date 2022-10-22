@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42CD7E7C29040F95002F6662 /* LiveKnob in Frameworks */ = {isa = PBXBuildFile; productRef = 42CD7E7B29040F95002F6662 /* LiveKnob */; };
+		42CD7E8A29042442002F6662 /* Controls in Frameworks */ = {isa = PBXBuildFile; productRef = 42CD7E8929042442002F6662 /* Controls */; };
 		4B31F5DFD6AAC637B17B5367 /* Pods_StudyBeatsFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01A5BDE3D0333F890D643C3 /* Pods_StudyBeatsFree.framework */; };
 		59C79F4359F5F6714B5FDCF7 /* Pods_StudyBeatsFree_StudyBeatsFreeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41AF863EAB8321075682B32D /* Pods_StudyBeatsFree_StudyBeatsFreeUITests.framework */; };
 		AC1E373EBE5D7539ACF53EBF /* Pods_StudyBeatsFreeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F597D675CBCD0AEE07D2BD4F /* Pods_StudyBeatsFreeTests.framework */; };
@@ -147,6 +149,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42CD7E7C29040F95002F6662 /* LiveKnob in Frameworks */,
+				42CD7E8A29042442002F6662 /* Controls in Frameworks */,
 				4B31F5DFD6AAC637B17B5367 /* Pods_StudyBeatsFree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +342,10 @@
 			dependencies = (
 			);
 			name = StudyBeatsFree;
+			packageProductDependencies = (
+				42CD7E7B29040F95002F6662 /* LiveKnob */,
+				42CD7E8929042442002F6662 /* Controls */,
+			);
 			productName = StudyBeatsFree;
 			productReference = BADB460825E11AC500D391B9 /* StudyBeatsFree.app */;
 			productType = "com.apple.product-type.application";
@@ -413,6 +421,10 @@
 				Base,
 			);
 			mainGroup = BADB45FF25E11AC500D391B9;
+			packageReferences = (
+				42CD7E7A29040F95002F6662 /* XCRemoteSwiftPackageReference "LiveKnob" */,
+				42CD7E8829042442002F6662 /* XCRemoteSwiftPackageReference "Controls" */,
+			);
 			productRefGroup = BADB460925E11AC500D391B9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -686,7 +698,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -741,7 +753,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -764,7 +776,7 @@
 				DEVELOPMENT_TEAM = J2452P8KTA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudyBeatsFree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -848,7 +860,7 @@
 				DEVELOPMENT_TEAM = J2452P8KTA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudyBeatsFree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1048,6 +1060,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		42CD7E7A29040F95002F6662 /* XCRemoteSwiftPackageReference "LiveKnob" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cemolcay/LiveKnob.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		42CD7E8829042442002F6662 /* XCRemoteSwiftPackageReference "Controls" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/Controls.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		42CD7E7B29040F95002F6662 /* LiveKnob */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42CD7E7A29040F95002F6662 /* XCRemoteSwiftPackageReference "LiveKnob" */;
+			productName = LiveKnob;
+		};
+		42CD7E8929042442002F6662 /* Controls */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 42CD7E8829042442002F6662 /* XCRemoteSwiftPackageReference "Controls" */;
+			productName = Controls;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BADB460025E11AC500D391B9 /* Project object */;
 }

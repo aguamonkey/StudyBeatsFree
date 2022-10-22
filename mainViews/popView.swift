@@ -21,35 +21,14 @@ struct popView: View {
                 
                 VStack {
                     VStack(alignment: .leading, spacing: 20) {
-                        // MARK: -TODO NAME
-           //             Image("step 3")
-          //                                              .resizable()
-           //                                                 .scaledToFit()
                         pop1()
-                        
                         Spacer()
-                        
                         StudyBeatsProPop()
-                        
                         Spacer()
                         Spacer()
                         Spacer()
-                        
                         Banner()
-                        
                         Spacer()
-                        
-                        //MARK: - TODO REASON WHY?
-                        
-                        
-                        
-                        
-                        
-                        
-                        //: SAVE BUTTON
-                        
-                    
-                        
                     } //: VSTACK
                         .padding(.horizontal)
                         .padding(.vertical, 30)
@@ -59,7 +38,6 @@ struct popView: View {
                     self.recordingsettings.stopPlayback()
                     self.recordingsettings.stopPlaybackThree()
                     self.recordingsettings.stopSound()
-                    
                 } //: VSTACK
                 //     .frame(height:1400)
                 
@@ -464,7 +442,16 @@ struct pop1: View {
                     }
                     
                }
-            
+                HStack {
+                    Spacer()
+                    Text("Vocal Volume")
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .foregroundColor(Color.white)
+                    Spacer()
+                }
+                Slider(value: $recordingsettings.vocalValue, in: Float(0.0)...recordingsettings.vocalMaxVolume, onEditingChanged: { _ in
+                    self.recordingsettings.changeVocalVolume()
+                }).accentColor(Color.white)
                 HStack {
                  Spacer()
                      Text("Vocal Reverb")

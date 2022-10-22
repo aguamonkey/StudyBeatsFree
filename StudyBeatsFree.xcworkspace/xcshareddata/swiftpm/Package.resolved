@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "controls",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/AudioKit/Controls.git",
+      "state" : {
+        "revision" : "5e1da73c34cfe60d5bdbd580dc395bd2da925191",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "liveknob",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cemolcay/LiveKnob.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "6960ecc068fec58ec657504bd482346166d706f8"
+      }
+    }
+  ],
+  "version" : 2
+}

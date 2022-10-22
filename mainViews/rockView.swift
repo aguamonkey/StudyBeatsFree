@@ -460,7 +460,16 @@ struct rock1: View {
                     }
                     
                }
-            
+                HStack {
+                    Spacer()
+                    Text("Vocal Volume")
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .foregroundColor(Color.white)
+                    Spacer()
+                }
+                Slider(value: $recordingsettings.vocalValue, in: Float(0.0)...recordingsettings.vocalMaxVolume, onEditingChanged: { _ in
+                    self.recordingsettings.changeVocalVolume()
+                }).accentColor(Color.white)
                 HStack {
                  Spacer()
                      Text("Vocal Reverb")
