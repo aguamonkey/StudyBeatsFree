@@ -27,6 +27,7 @@ struct ContentView: View {
                 }
                 
             }.padding(.horizontal, 10)
+            .onAppear(perform: ReviewHandler.requestReview)
         }
     }
     

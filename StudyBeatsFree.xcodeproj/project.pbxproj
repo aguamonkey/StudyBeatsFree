@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42C80D702905298E00F09DA4 /* reviewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C80D6F2905298E00F09DA4 /* reviewHandler.swift */; };
+		42C80D7229052AAF00F09DA4 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C80D7129052AAF00F09DA4 /* UserDefaultKeys.swift */; };
 		42CD7E7C29040F95002F6662 /* LiveKnob in Frameworks */ = {isa = PBXBuildFile; productRef = 42CD7E7B29040F95002F6662 /* LiveKnob */; };
 		42CD7E8A29042442002F6662 /* Controls in Frameworks */ = {isa = PBXBuildFile; productRef = 42CD7E8929042442002F6662 /* Controls */; };
 		4B31F5DFD6AAC637B17B5367 /* Pods_StudyBeatsFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01A5BDE3D0333F890D643C3 /* Pods_StudyBeatsFree.framework */; };
@@ -82,6 +84,8 @@
 		047BC24ACC8286804B4CEE8E /* Pods-StudyBeatsFree-StudyBeatsFreeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyBeatsFree-StudyBeatsFreeUITests.release.xcconfig"; path = "Target Support Files/Pods-StudyBeatsFree-StudyBeatsFreeUITests/Pods-StudyBeatsFree-StudyBeatsFreeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2B882C8A2DFFF575B8131000 /* Pods-StudyBeatsFree-StudyBeatsFreeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyBeatsFree-StudyBeatsFreeUITests.debug.xcconfig"; path = "Target Support Files/Pods-StudyBeatsFree-StudyBeatsFreeUITests/Pods-StudyBeatsFree-StudyBeatsFreeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		41AF863EAB8321075682B32D /* Pods_StudyBeatsFree_StudyBeatsFreeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudyBeatsFree_StudyBeatsFreeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42C80D6F2905298E00F09DA4 /* reviewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reviewHandler.swift; sourceTree = "<group>"; };
+		42C80D7129052AAF00F09DA4 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		72B01D54738E5F7A09E28A5B /* Pods-StudyBeatsFreeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyBeatsFreeTests.debug.xcconfig"; path = "Target Support Files/Pods-StudyBeatsFreeTests/Pods-StudyBeatsFreeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A01A5BDE3D0333F890D643C3 /* Pods_StudyBeatsFree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudyBeatsFree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA209D12261882390026EB91 /* danceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = danceSettings.swift; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 				BAF35E7825F119300017BB7D /* playSoundFile.swift */,
 				BA8028DA25F62F6F00C9CCA1 /* recordingFile.swift */,
 				BA9902E7261346B2003C7AA0 /* bannerAds.swift */,
+				42C80D6F2905298E00F09DA4 /* reviewHandler.swift */,
+				42C80D7129052AAF00F09DA4 /* UserDefaultKeys.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 				BA986F5F25E67FE400BA93DB /* countrySettings.swift in Sources */,
 				BAF35E9725F1270C0017BB7D /* danceView.swift in Sources */,
 				BA986F6125E67FE400BA93DB /* rapSettings.swift in Sources */,
+				42C80D7229052AAF00F09DA4 /* UserDefaultKeys.swift in Sources */,
 				BA986F6325E67FE400BA93DB /* TextView.swift in Sources */,
 				BAF35E9225F127050017BB7D /* acousticView.swift in Sources */,
 				BA986F6525E67FE400BA93DB /* popSettings.swift in Sources */,
@@ -611,6 +618,7 @@
 				BADB466525E11DF400D391B9 /* SceneDelegate.swift in Sources */,
 				BAF35E9C25F127130017BB7D /* reggaeView.swift in Sources */,
 				BADB466925E11DF400D391B9 /* CardModel.swift in Sources */,
+				42C80D702905298E00F09DA4 /* reviewHandler.swift in Sources */,
 				BAF35E8325F126C10017BB7D /* rapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -698,7 +706,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -753,7 +761,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -771,12 +779,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyBeatsFree/Preview Content\"";
 				DEVELOPMENT_TEAM = J2452P8KTA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudyBeatsFree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -855,12 +863,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyBeatsFree/Preview Content\"";
 				DEVELOPMENT_TEAM = J2452P8KTA;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = StudyBeatsFree/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

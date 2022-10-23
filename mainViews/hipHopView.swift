@@ -49,6 +49,7 @@ struct hipHopView: View {
                 
             }.background(LinearGradient(gradient: Gradient(colors: gradient), startPoint: .top, endPoint: .bottom))
                 .edgesIgnoringSafeArea(.all)
+                
             
         }
     }
