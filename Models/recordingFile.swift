@@ -32,6 +32,7 @@ class Recorder: ObservableObject {
     var songDuration: TimeInterval = 0.0
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
+    var multipleReverbSettings = ["Small Room", "Medium Room", "Large Room", "Large Room 2", "Medium Hall", "Medium Hall 2", "Medium Hall 3", "Large Hall", "Large Hall 2", "Plate", "Medium Chamber", "Large Chamber", "Cathedral"]
     
     var formatter = DateComponentsFormatter()
     var isPlaying = false
@@ -86,6 +87,7 @@ class Recorder: ObservableObject {
     setupSession()
     setupEngine()
     registerForNotifications()
+
   //  setupSessionPlayback()
   }
 
@@ -114,8 +116,11 @@ class Recorder: ObservableObject {
 
     
     fileprivate func setupEngine() {
-      engine = AVAudioEngine()
-      mixerNode = AVAudioMixerNode()
+        let defaults = UserDefaults.standard
+        defaults.set(multipleReverbSettings, forKey: "ReverbSetup")
+        
+        engine = AVAudioEngine()
+        mixerNode = AVAudioMixerNode()
         playerNode = AVAudioPlayerNode()
         setReverb = AVAudioUnitReverb()
         setDelay = AVAudioUnitDelay()
@@ -137,9 +142,9 @@ class Recorder: ObservableObject {
       engine.prepare()
     }
 
-
     fileprivate func makeConnections() {
         //You want to connect the player node to here but you may need to align it to a buffer in another function.
+
         
         input = engine.inputNode
         if bluetoothDeviceConnected == true {
@@ -175,11 +180,44 @@ class Recorder: ObservableObject {
         setDelay.delayTime = 0
         setDelay.feedback = 50
         setDelay.lowPassCutoff = 15000
-        
         setDelay.wetDryMix = 100
         
         setReverb.wetDryMix = 0.4
-        setReverb.loadFactoryPreset(.largeChamber)
+        
+        for effects in multipleReverbSettings {
+            switch effects {
+            case "Small Room":
+                print("Small Room Activated")
+                setReverb.loadFactoryPreset(.smallRoom)
+            case "Medium Room":
+                setReverb.loadFactoryPreset(.mediumRoom)
+            case "Large Room":
+                setReverb.loadFactoryPreset(.largeRoom)
+            case "Large Room 2":
+                setReverb.loadFactoryPreset(.largeRoom2)
+            case "Medium Hall":
+                setReverb.loadFactoryPreset(.mediumHall)
+            case "Medium Hall 2":
+                setReverb.loadFactoryPreset(.mediumHall2)
+            case "Medium Hall 3":
+                setReverb.loadFactoryPreset(.mediumHall3)
+            case "Large Hall":
+                setReverb.loadFactoryPreset(.largeHall)
+            case "Large Hall 2":
+                setReverb.loadFactoryPreset(.largeHall2)
+            case "Plate":
+                setReverb.loadFactoryPreset(.plate)
+            case "Medium  Chamber":
+                setReverb.loadFactoryPreset(.mediumChamber)
+            case "Large  Chamber":
+                setReverb.loadFactoryPreset(.largeChamber)
+            case "Cathedral":
+                setReverb.loadFactoryPreset(.cathedral)
+            default:
+                setReverb.loadFactoryPreset(.largeChamber)
+                print("Set to default")
+            }
+        }
     }
     
     func changeReverbValue() {
@@ -197,8 +235,6 @@ class Recorder: ObservableObject {
     func changeVocalVolume() {
         input.volume = vocalValue
     }
-
-
 
     func setUpAudio(sound: String) {
         

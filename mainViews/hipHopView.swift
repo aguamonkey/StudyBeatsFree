@@ -459,10 +459,16 @@ struct hiphop1: View {
                         .font(Font.custom("Lobster 1.4", size: 20))
                         .foregroundColor(Color.white)
                     Spacer()
+                   
                 }
                 Slider(value: $recordingsettings.reverbValue, in: Float(0.0)...recordingsettings.reverbMaxValue, onEditingChanged: { _ in
                     self.recordingsettings.changeReverbValue()
                 }).accentColor(Color.white)
+                HStack {
+                    Spacer()
+                    DropDown()
+                    Spacer()
+                }
                 HStack {
                     Spacer()
                     Text("Vocal Delay")
@@ -483,6 +489,184 @@ struct hiphop1: View {
         let fileName = docDir.appendingPathComponent(AudioName)
         
         return fileName
+    }
+}
+
+struct DropDown: View {
+    @State var expand = false
+    var gradient: [Color] = [Color("HipHop"), Color("HipHop2")]
+    var reverbSetupArray = [String]()
+
+    init() {
+    let defaults = UserDefaults.standard
+    reverbSetupArray = defaults.stringArray(forKey: "ReverbSetup") ?? [String]()
+    }
+    @State private var dropDownDisplay: String = "Reverb Effects"
+    var body: some View {
+        VStack(alignment: .leading, spacing: 18, content: {
+            HStack {
+                Spacer()
+                Text(dropDownDisplay).fontWeight(.heavy)
+                    .font(Font.custom("Lobster 1.4", size: 20))
+                    .foregroundColor(.white)
+                Image(systemName: expand ? "chevron.up" : "chevron.down").resizable().frame(width: 13, height: 6).foregroundColor(.white)
+                Spacer()
+            }
+            .onTapGesture {
+                self.expand.toggle()
+            }
+            
+            if expand {
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = reverbSetupArray[0]
+                }) {
+                    Spacer()
+                    Text(reverbSetupArray[0])
+                    Spacer()
+                }.foregroundColor(.white)
+                    .font(Font.custom("Lobster 1.4", size: 20))
+                    .multilineTextAlignment(.center)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = reverbSetupArray[4]
+                }) {
+                    Spacer()
+                    Text(reverbSetupArray[4])
+                    Spacer()
+                }.foregroundColor(.white)
+                    .font(Font.custom("Lobster 1.4", size: 20))
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = reverbSetupArray[11]
+                }) {
+                    Spacer()
+                    Text(reverbSetupArray[11])
+                    Spacer()
+                }.foregroundColor(.white)
+                    .font(Font.custom("Lobster 1.4", size: 20))
+                    .multilineTextAlignment(.center)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Medium Room | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Medium Hall 2 | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Medium Hall 3 | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = reverbSetupArray[2]
+                }) {
+                    Spacer()
+                    Text("Large Room | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Large Room 2 | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Group {
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Large Hall | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Large Hall 2 | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Plate | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Medium Chamber | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                Button(action: {
+                    self.expand.toggle()
+                    dropDownDisplay = "Set To Default"
+                }) {
+                    Spacer()
+                    Text("Cathedral | Study Beats Pro")
+                    Spacer()
+                }.foregroundColor(.white)
+                        .font(Font.custom("Lobster 1.4", size: 20))
+                        .opacity(0.5)
+                        .disabled(true)
+                
+                }
+            }
+            
+        })
+        .padding()
+        .background(LinearGradient(gradient: Gradient(colors: gradient), startPoint: .top, endPoint: .bottom))
+        .cornerRadius(0)
+        .border(.white)
+        .animation(.spring())
     }
 }
 
